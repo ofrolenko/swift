@@ -65,7 +65,7 @@ calc_counter () {
 
 for branch in $(git for-each-ref --format='%(refname:short)' refs/heads)
 do
-  branch_name = $branch
+  branch_name=$branch
   calc_counter
   do_branch_acions $branch_name $counter
 done
