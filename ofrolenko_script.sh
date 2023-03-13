@@ -30,7 +30,7 @@ do_commit () {
   branch=${3}
   change_file $text $count
   git commit -am "TST-1 created test commit ${note}"
-  echo "commited for branch ${branch}"
+  echo "committed for branch ${branch}"
 }
 
 do_push() {
