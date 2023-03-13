@@ -13,7 +13,6 @@ create_file_in_repo () {
   if [ ! -f "$FILE" ]; then
     echo ${1} > $FILE
     git add $FILE
-    echo "file was added to the repo"
   fi
 }
 
@@ -21,7 +20,6 @@ change_file () {
   text=${1}
   count=${note}
   echo "${text} ${note}" >> $FILE
-  echo "file is changed"
 }
 
 do_commit () {
@@ -30,7 +28,6 @@ do_commit () {
   branch=${3}
   change_file $text $count
   git commit -am "TST-1 created test commit ${note}"
-  echo "committed for branch ${branch}"
 }
 
 do_push() {
@@ -41,10 +38,9 @@ do_push() {
 go_to_branch () {
   branch=${1}
   git checkout $branch
-  echo "moved to branch ${branch}"
 }
 
-do_branch_acions () {
+do_branch_actions () {
   branch=${1}
   counter=${2}
   go_to_branch $branch $counter
@@ -63,19 +59,19 @@ calc_counter () {
 
 
 
-for branch in $(git for-each-ref --format='%(refname:short)' refs/heads)
-do
-  branch_name=$branch
-  calc_counter
-  do_branch_acions $branch_name $counter
-done
-
-
-#for branch in $(git for-each-ref --format='%(refname:short)' refs/remotes)
+#for branch in $(git for-each-ref --format='%(refname:short)' refs/heads)
 #do
-#  branch_name = $branch | cut -d '/' -f 2
+#  branch_name=$branch
 #  calc_counter
-#  do_branch_acions $branch_name $counter
+#  do_branch_actions $branch_name $counter
 #done
+
+
+for branch in $(git for-each-ref --format='%(refname:short)' refs/remotes)
+do
+  branch_name=$(echo $branch | cut -d '/' -f 2)
+  calc_counter
+  do_branch_actions $branch_name $counter
+done
 
 
